@@ -1,3 +1,5 @@
+import addDraggableEvents from './utils/addDraggableEvents.js'
+
 const styles = {
   chessPieceStyle: `
     width: 90%;
@@ -10,8 +12,10 @@ const styles = {
 export default function makeChessPiece(fileID, i, j) {
   const iconElement = document.createElement('img')
   iconElement.id = fileID
-  iconElement.onclick = chessPieceClickHanlder
+  iconElement.className = 'chess-piece'
   iconElement.style = styles.chessPieceStyle
+  iconElement.onclick = chessPieceClickHanlder
+  addDraggableEvents(iconElement)
 
   if (i === 1) iconElement.src = './icons/P-B.png'
   if (i === 0 && j === 4) iconElement.src = './icons/Q-B.png'

@@ -29,7 +29,7 @@ rows.forEach((_, i) => {
     const columnElement = document.createElement('div')
     columnElement.style = styles.columnStyle
 
-    const chessPiece = makeChessPiece(rows[j] + colums[8 - i], i, j)
+    const chessPiece = makeChessPiece(rows[j] + colums[7 - i], i, j)
     columnElement.appendChild(chessPiece)
 
     if (j === 0) columnElement.innerText = colums[7 - i]

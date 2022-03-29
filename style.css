@@ -1,0 +1,11 @@
+.chess-piece.invisible {
+  display: none;
+}
+
+.chess-piece.hold {
+  border: 2px solid orange;
+}
+
+.chess-piece.hovered {
+  border: 2px solid orange;
+}
