@@ -7,14 +7,12 @@ const styles = {
   `,
 }
 
-// const pieces = [{ K: 'King' }, { Q: 'Queen' }, { R: 'Rook' }, { B: 'Bishop' }, { N: 'Knight' }, { P: 'Pawn' }]
-
-export default function makeChessPiece(fileID, i, j) {
+export default function makePiece(fileID, i, j) {
   const iconElement = document.createElement('img')
   iconElement.id = fileID
   iconElement.className = 'chess-piece'
   iconElement.style = styles.chessPieceStyle
-  iconElement.onclick = chessPieceClickHanlder
+  iconElement.onclick = pieceClickHanlder
   addDraggableEvents(iconElement)
 
   if (i === 1) iconElement.src = './icons/P-B.png'
@@ -34,6 +32,6 @@ export default function makeChessPiece(fileID, i, j) {
   return iconElement
 }
 
-function chessPieceClickHanlder(event) {
+function pieceClickHanlder(event) {
   console.log(event.target.id)
 }
