@@ -1,7 +1,5 @@
-// import './scripts/board.js'
+import board from './scripts/board.js'
 
-import InitFilesRanksBrd from './scripts/InitFilesRanksBrd.js'
-
-InitFilesRanksBrd()
+board()
 
 console.log('MAIN JS')
