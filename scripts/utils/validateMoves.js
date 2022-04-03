@@ -18,3 +18,7 @@ export default function validateMoves(selectedNode, targetNode) {
   5. Halfmove Clock (50-move draw), when counter reaches 100 the game ends in a draw.
   6. Fullmove Number (number of completed turns).
 */
+
+/*
+  setup the board
+*/
