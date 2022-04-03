@@ -1,3 +1,4 @@
+import makePiece from '../makePiece.js'
 import { FEN_STARTING_POSITION, PIECES } from '../setup.js'
 
 const pieceTypeFromSymbol = {
@@ -27,11 +28,11 @@ export default function loadPositionFromFen() {
         let pieceEntry = row[j - 1]?.toLocaleLowerCase()
         let pieceColor = row[j - 1] === pieceEntry ? PIECES.Black : PIECES.White
         const boardPiece = pieceTypeFromSymbol[pieceEntry] + pieceColor
-        node.id = boardPiece ? boardPiece : PIECES.Empty
-      })
 
-      // row.forEach((row) => console.log(row))
-      // console.log(fileNodes)
+        const IconElement = makePiece(boardPiece)
+
+        if (boardBound) node.appendChild(IconElement)
+      })
     })
 
     console.log(fenBoard, boardContainer)
