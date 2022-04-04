@@ -1,5 +1,3 @@
-// import makePiece from './makePiece.js'
-
 const styles = {
   columnStyle: `
   width: 45px;
@@ -29,9 +27,6 @@ export default function makeBoard() {
     colums.forEach((_, j) => {
       const columnElement = document.createElement('div')
       columnElement.style = styles.columnStyle
-
-      // const PieceElement = makePiece(rows[j] + colums[7 - i], i, j)
-      // columnElement.appendChild(PieceElement)
 
       if (j === 0) columnElement.innerText = colums[7 - i]
       if (8 - i === 0) columnElement.innerText = rows[j]

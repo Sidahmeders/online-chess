@@ -7,11 +7,13 @@ const styles = {
   `,
 }
 
-export default function makePiece(boardPiece) {
+export default function makePiece(pieceID, position) {
   const IconElement = document.createElement('img')
-  IconElement.id = boardPiece
+  IconElement.id = pieceID
+  IconElement.setAttribute('position', position)
+  IconElement.className = 'chess-piece'
   IconElement.style = styles.chessPieceStyle
-  IconElement.src = boardPiece ? `icons/${boardPiece}.png` : ' '
+  IconElement.src = pieceID ? `icons/${pieceID}.png` : ' '
   IconElement.onclick = pieceClickHanlder
   addDraggableEvents(IconElement)
 
@@ -19,5 +21,6 @@ export default function makePiece(boardPiece) {
 }
 
 function pieceClickHanlder(event) {
-  console.log(event.target.id)
+  console.log(event.target.id, 'id')
+  console.log(event.target.getAttribute('position'), 'position')
 }
