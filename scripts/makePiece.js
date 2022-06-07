@@ -1,4 +1,4 @@
-import addDraggableEvents from './utils/addDraggableEvents.js'
+import addDraggableEvents from './pieceMovementsHandlers/addDraggableEvents.js'
 
 const styles = {
   chessPieceStyle: `

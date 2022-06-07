@@ -41,6 +41,15 @@ export const PIECES = {
   Black: 16,
 }
 
+export const PieceTypeFromSymbol = {
+  k: PIECES.King,
+  q: PIECES.Queen,
+  b: PIECES.Bishop,
+  n: PIECES.Knight,
+  r: PIECES.Rook,
+  p: PIECES.Pawn,
+}
+
 export function PIECES_MOVES() {
   /*
   -9  -1   -7
@@ -63,19 +72,31 @@ export function PIECES_MOVES() {
     rightDown: [+1, +1, +8],
   }
 
-  const King = { moves: allDirections, capture: allDirections }
-  const Queen = { moves: allDirections, capture: allDirections }
-  const Bishop = { moves: diagonalMoves, capture: diagonalMoves }
-  const Knight = { moves: KnightMoves, capture: KnightMoves }
-  const Rook = { moves: straightMoves, capture: straightMoves }
-  const Pawn = { moves: { up: -8 }, capture: { upLeft: -9, upRight: -7 } }
+  const King = { ...allDirections }
+  const Queen = { ...allDirections }
+  const Bishop = { ...diagonalMoves }
+  const Knight = { ...KnightMoves }
+  const Rook = { ...straightMoves }
+  const Pawn = { up: -8, upLeft: -9, upRight: -7 }
 
-  return Object.freeze({
-    King: () => King,
-    Queen: () => Queen,
-    Bishop: () => Bishop,
-    Knight: () => Knight,
-    Rook: () => Rook,
-    Pawn: () => Pawn,
-  })
+  return Object.freeze({ King, Queen, Bishop, Knight, Rook, Pawn })
+}
+
+export const decToBin = (decimal) => {
+  if (decimal === 0) return decimal
+  let reminder = decimal % 2
+  let bin = decToBin(Math.floor(decimal / 2)) + reminder
+  return String(bin)
+}
+
+export function getPieceTypeFromNumber(number) {
+  let bin = decToBin(number)
+  bin = bin.length === 4 ? '0' + bin : bin
+
+  const typeValue = parseInt('00' + bin.slice(2), 2)
+  const pieceType = Object.entries(PIECES)
+    .map(([key, value]) => (value == typeValue ? key : null))
+    .filter((val) => val)[0]
+
+  return pieceType
 }

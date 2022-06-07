@@ -1,14 +1,5 @@
 import makePiece from './makePiece.js'
-import { FEN_STARTING_POSITION, PIECES } from './setup.js'
-
-const pieceTypeFromSymbol = {
-  k: PIECES.King,
-  q: PIECES.Queen,
-  b: PIECES.Bishop,
-  n: PIECES.Knight,
-  r: PIECES.Rook,
-  p: PIECES.Pawn,
-}
+import { FEN_STARTING_POSITION, PIECES, PieceTypeFromSymbol } from './setup.js'
 
 export default function loadPositionFromFen() {
   // rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
@@ -26,7 +17,7 @@ export default function loadPositionFromFen() {
         node.style.background = (i + j) % 2 ? '#0606' : '#ff66'
         const pieceEntry = row[j - 1]?.toLocaleLowerCase()
         const pieceColor = row[j - 1] === pieceEntry ? PIECES.Black : PIECES.White
-        const boardPiece = pieceTypeFromSymbol[pieceEntry] + pieceColor
+        const boardPiece = PieceTypeFromSymbol[pieceEntry] + pieceColor
         const pieceID = boardPiece ? boardPiece : PIECES.Empty
         const IconElement = makePiece(pieceID, positionCounter++)
         node.appendChild(IconElement)

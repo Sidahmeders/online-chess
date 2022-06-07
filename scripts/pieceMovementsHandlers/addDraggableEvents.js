@@ -1,4 +1,6 @@
-import validateMoves from './validateMoves.js'
+import validateMoves, { clearPieceMovementsHighlight, swapNodes } from './validateMoves.js'
+
+let selectedNode = null
 
 export default function addDragableEvents(nodeElement) {
   nodeElement.addEventListener('dragstart', dragStart)
@@ -9,18 +11,17 @@ export default function addDragableEvents(nodeElement) {
   nodeElement.addEventListener('drop', dragDrop)
 }
 
-let selectedNode
-
 function dragStart() {
   this.classList.add('hold')
   setTimeout(() => this.classList.add('invisible'), 0)
-
+  validateMoves(this)
   selectedNode = this
 }
 
 function dragEnd() {
   this.classList.remove('invisible')
   this.classList.remove('hold')
+  clearPieceMovementsHighlight()
 }
 
 function dragOver(event) {
@@ -38,6 +39,5 @@ function dragLeave() {
 
 function dragDrop() {
   this.classList.remove('hovered')
-
-  validateMoves(selectedNode, this)
+  swapNodes(selectedNode, this)
 }
