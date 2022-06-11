@@ -1,8 +1,11 @@
 import { PIECES, getPieceTypeFromNumber, PIECES_MOVES } from '../setup.js'
+import generatePawnMoves from './generatePawnMoves.js'
 
-let highlightedBoardSquares = []
-let validMoves
-let playingTurn
+export const _state = {
+  highlightedBoardSquares: [],
+  validMoves: null,
+  playingTurn: null,
+}
 
 export default function validateMoves(selectedNode) {
   const boardContainer = document.getElementById('board-container')
@@ -39,64 +42,30 @@ function createVirtualBoard(boardContainer) {
   return { boardArray, virtualBoardArray }
 }
 
-function generatePawnMoves({ boardArray, virtualBoardArray, piecePosition, pieceMoves, selectedNode }) {
-  console.log(pieceMoves, boardArray, virtualBoardArray)
-
-  validMoves = []
-  const visitedDirections = new Set()
-  Object.entries(pieceMoves).forEach(([key, val]) => {
-    let positionCounter = parseInt(piecePosition)
-    // if we got out of bound, break
-    while (!visitedDirections.has(key)) {
-      const boardColumnElement = boardArray[positionCounter]
-
-      // if we found a friendlly piece, stop explorig and break
-      const isFriendlPiece =
-        selectedNode.getAttribute('position') !== boardColumnElement.getAttribute('position') &&
-        boardColumnElement.getAttribute('src') !== ' '
-      if (isFriendlPiece) break
-
-      // if we found an opposing piece, capture it and break
-      // TODO:
-
-      const isEmptyPiece = parseInt(boardColumnElement.id) === PIECES.Empty
-      const pieceColor = isSameColor(selectedNode.id, boardColumnElement.id)
-
-      if (pieceColor === 'White') positionCounter += val
-      if (pieceColor === 'Black') positionCounter -= val
-      if (positionCounter < 0 || positionCounter > 63 || isEmptyPiece) {
-        playingTurn = pieceColor
-        validMoves.push(val)
-        visitedDirections.add(key)
-      }
-      if (isEmptyPiece) highlightPieceMovements(boardColumnElement)
-    }
-  })
+export function getPieceColor(pieceID) {
+  if (pieceID == 0) return 'Empty'
+  if (pieceID < 15) return 'White'
+  if (pieceID > 16) return 'Black'
 }
 
-function isSameColor(pieceID, targetPieceID) {
-  if (pieceID < 15 && targetPieceID < 15) return 'White'
-  if (pieceID > 16 && targetPieceID > 16) return 'Black'
-  return false
-}
-
-function highlightPieceMovements(boardColumnElement) {
+export function highlightPieceMovements(boardColumnElement) {
   boardColumnElement.style.background = '#49dd'
-  highlightedBoardSquares.push(boardColumnElement)
+  _state.highlightedBoardSquares.push(boardColumnElement)
 }
 
 export function clearPieceMovementsHighlight() {
-  highlightedBoardSquares.forEach((sqaureNode) => (sqaureNode.style.background = 'initial'))
-  highlightedBoardSquares = []
+  _state.highlightedBoardSquares.forEach((sqaureNode) => (sqaureNode.style.background = 'initial'))
+  _state.highlightedBoardSquares = []
 }
 
 export function swapNodes(selectedNode, targetNode) {
   const [selected, target] = [selectedNode.getAttribute('position'), targetNode.getAttribute('position')]
   const isValidMove =
-    playingTurn === 'White'
-      ? validMoves.some((val) => val + parseInt(selected) == parseInt(target))
-      : validMoves.some((val) => val + parseInt(target) == parseInt(selected))
-  validMoves = []
+    _state.playingTurn === 'White'
+      ? _state.validMoves.some((val) => val + parseInt(selected) == parseInt(target))
+      : _state.validMoves.some((val) => val + parseInt(target) == parseInt(selected))
+
+  _state.validMoves = []
   if (!isValidMove) return
 
   targetNode.src = selectedNode.src
