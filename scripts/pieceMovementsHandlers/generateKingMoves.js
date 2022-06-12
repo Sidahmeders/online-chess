@@ -3,29 +3,21 @@ import { _state, getPieceColor, highlightPieceMovements } from './validateMoves.
 export default function generateKingMoves({ boardArray, pieceMoves, selectedNode }) {
   // console.log(boardArray, virtualBoardArray)
   _state.validMoves = []
-  const visitedDirections = new Set()
-  Object.entries(pieceMoves).forEach(([key, val]) => {
-    let positionCounter = parseInt(selectedNode.getAttribute('position'))
-    while (!visitedDirections.has(key)) {
-      const targetNode = boardArray[positionCounter]
-      const pieceColor = getPieceColor(selectedNode.id)
-      // const targetPieceColor = getPieceColor(targetNode.id)
+  Object.values(pieceMoves).forEach((val) => {
+    let nodePosition = parseInt(selectedNode.getAttribute('position'))
+    const pieceColor = getPieceColor(selectedNode.id)
 
-      const nodePosition = selectedNode.getAttribute('position')
-      const targetNodePosition = targetNode.getAttribute('position')
+    const targetIndex = pieceColor === 'White' ? nodePosition + val : nodePosition - val
+    if (targetIndex < 0 || targetIndex > 63) return
 
-      if (pieceColor) {
-        console.log(targetNode)
-        highlightPieceMovements(targetNode)
-        visitedDirections.add(key)
-        const validMove = pieceColor === 'White' ? val + parseInt(nodePosition) : parseInt(targetNodePosition)
-        _state.validMoves.push(validMove)
-      }
+    const targetNode = boardArray[targetIndex]
+    const targetNodePosition = parseInt(targetNode.getAttribute('position'))
+    const targetPieceColor = getPieceColor(targetNode.id)
 
-      if (pieceColor === 'White') positionCounter += val
-      if (pieceColor === 'Black') positionCounter -= val
-      // if we get out of bound, return
-      if (positionCounter < 0 || positionCounter > 63) return
+    if (targetPieceColor === 'Empty' || pieceColor !== targetPieceColor) {
+      const validMove = pieceColor === 'White' ? val + nodePosition : targetNodePosition
+      highlightPieceMovements(boardArray[validMove])
+      _state.validMoves.push(validMove)
     }
   })
 }

@@ -4,19 +4,22 @@ import { _state, getPieceColor, highlightPieceMovements } from './validateMoves.
 export default function generatePawnMoves({ boardArray, pieceMoves, selectedNode }) {
   // console.log(boardArray, virtualBoardArray)
   _state.validMoves = []
-  const visitedDirections = new Set()
+
   Object.entries(pieceMoves).forEach(([key, val]) => {
     let positionCounter = parseInt(selectedNode.getAttribute('position'))
-    while (!visitedDirections.has(key)) {
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
       const targetNode = boardArray[positionCounter]
+
       const pieceColor = getPieceColor(selectedNode.id)
       const targetPieceColor = getPieceColor(targetNode.id)
 
       const nodePosition = selectedNode.getAttribute('position')
       const targetNodePosition = targetNode.getAttribute('position')
-      const canCapture = pieceColor !== targetPieceColor && targetPieceColor !== 'Empty' && key !== 'up'
 
+      const canCapture = pieceColor !== targetPieceColor && targetPieceColor !== 'Empty' && key !== 'up'
       const isFriendlPiece = nodePosition !== targetNodePosition && targetPieceColor !== 'Empty'
+
       // if we found a friendlly piece, stop explorig and return
       if (isFriendlPiece && !canCapture) return
 
@@ -26,9 +29,8 @@ export default function generatePawnMoves({ boardArray, pieceMoves, selectedNode
 
       // if we found an opposing piece, capture it and return
       if ((canCapture || canMoveForward) && canLeapTo) {
-        highlightPieceMovements(targetNode)
-        visitedDirections.add(key)
         const validMove = pieceColor === 'White' ? val + parseInt(nodePosition) : parseInt(targetNodePosition)
+        highlightPieceMovements(boardArray[validMove])
         _state.validMoves.push(validMove)
       }
 
