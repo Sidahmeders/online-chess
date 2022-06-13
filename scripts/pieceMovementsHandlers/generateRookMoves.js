@@ -10,11 +10,10 @@ export default function generateRookMoves({ boardArray, pieceMoves, selectedNode
       let nodePosition = parseInt(selectedNode.getAttribute('position'))
       const pieceColor = getPieceColor(selectedNode.id)
 
-      const targetIndex = pieceColor === 'White' ? nodePosition + increment : nodePosition - increment
-      if (targetIndex < 0 || targetIndex > 63) return
+      const targetNodePosition = pieceColor === 'White' ? nodePosition + increment : nodePosition - increment
+      if (targetNodePosition < 0 || targetNodePosition > 63) return
 
-      const targetNode = boardArray[targetIndex]
-      const targetNodePosition = parseInt(targetNode.getAttribute('position'))
+      const targetNode = boardArray[targetNodePosition]
       const targetPieceColor = getPieceColor(targetNode.id)
 
       const rowIndex = selectedNode.parentNode.getAttribute('row-index')

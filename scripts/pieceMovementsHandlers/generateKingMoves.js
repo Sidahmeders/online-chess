@@ -6,11 +6,10 @@ export default function generateKingMoves({ boardArray, pieceMoves, selectedNode
     let nodePosition = parseInt(selectedNode.getAttribute('position'))
     const pieceColor = getPieceColor(selectedNode.id)
 
-    const targetIndex = pieceColor === 'White' ? nodePosition + val : nodePosition - val
-    if (targetIndex < 0 || targetIndex > 63) return
+    const targetNodePosition = pieceColor === 'White' ? nodePosition + val : nodePosition - val
+    if (targetNodePosition < 0 || targetNodePosition > 63) return
 
-    const targetNode = boardArray[targetIndex]
-    const targetNodePosition = parseInt(targetNode.getAttribute('position'))
+    const targetNode = boardArray[targetNodePosition]
     const targetPieceColor = getPieceColor(targetNode.id)
 
     if (targetPieceColor === 'Empty' || pieceColor !== targetPieceColor) {

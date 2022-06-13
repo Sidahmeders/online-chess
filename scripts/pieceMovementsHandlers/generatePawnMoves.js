@@ -8,11 +8,10 @@ export default function generatePawnMoves({ boardArray, pieceMoves, selectedNode
     const nodePosition = parseInt(selectedNode.getAttribute('position'))
     const pieceColor = getPieceColor(selectedNode.id)
 
-    const targetIndex = pieceColor === 'White' ? nodePosition + val : nodePosition - val
-    if (targetIndex < 0 || targetIndex > 63) return
+    const targetNodePosition = pieceColor === 'White' ? nodePosition + val : nodePosition - val
+    if (targetNodePosition < 0 || targetNodePosition > 63) return
 
-    const targetNode = boardArray[targetIndex]
-    const targetNodePosition = parseInt(targetNode.getAttribute('position'))
+    const targetNode = boardArray[targetNodePosition]
     const targetPieceColor = getPieceColor(targetNode.id)
 
     const canCapture = pieceColor !== targetPieceColor && targetPieceColor !== 'Empty' && key !== 'up'
