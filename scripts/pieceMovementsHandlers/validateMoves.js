@@ -1,6 +1,7 @@
 import { PIECES, getPieceTypeFromNumber, PIECES_MOVES } from '../setup.js'
 import generatePawnMoves from './generatePawnMoves.js'
 import generateKingMoves from './generateKingMoves.js'
+import generateBishopMoves from './generateBishopMoves.js'
 
 export const _state = {
   highlightedBoardSquares: [],
@@ -22,6 +23,9 @@ export default function validateMoves(selectedNode) {
       break
     case 'King':
       generateKingMoves(pieceDAO)
+      break
+    case 'Bishop':
+      generateBishopMoves(pieceDAO)
       break
     default:
       console.warn('unhanlded condition')

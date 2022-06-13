@@ -14,7 +14,9 @@ export default function loadPositionFromFen() {
     fileNodes.forEach((node, j) => {
       const isBoardBound = i < 8 && j > 0
       if (isBoardBound) {
-        node.style.background = (i + j) % 2 ? '#0606' : '#ff66'
+        const isBlackTile = (i + j) % 2
+        node.style.background = isBlackTile ? '#0606' : '#ff66'
+        node.setAttribute('tile-color', isBlackTile ? 'black' : 'white')
         const pieceEntry = row[j - 1]?.toLocaleLowerCase()
         const pieceColor = row[j - 1] === pieceEntry ? PIECES.Black : PIECES.White
         const boardPiece = PieceTypeFromSymbol[pieceEntry] + pieceColor

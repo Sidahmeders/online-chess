@@ -1,7 +1,6 @@
 import { _state, getPieceColor, highlightPieceMovements } from './validateMoves.js'
 
 export default function generateKingMoves({ boardArray, pieceMoves, selectedNode }) {
-  // console.log(boardArray, virtualBoardArray)
   _state.validMoves = []
   Object.values(pieceMoves).forEach((val) => {
     let nodePosition = parseInt(selectedNode.getAttribute('position'))
