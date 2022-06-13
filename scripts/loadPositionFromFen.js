@@ -17,9 +17,12 @@ export default function loadPositionFromFen() {
         const isBlackTile = (i + j) % 2
         node.style.background = isBlackTile ? '#0606' : '#ff66'
         node.setAttribute('tile-color', isBlackTile ? 'black' : 'white')
+        node.setAttribute('row-index', i)
+
         const pieceEntry = row[j - 1]?.toLocaleLowerCase()
         const pieceColor = row[j - 1] === pieceEntry ? PIECES.Black : PIECES.White
         const boardPiece = PieceTypeFromSymbol[pieceEntry] + pieceColor
+
         const pieceID = boardPiece ? boardPiece : PIECES.Empty
         const IconElement = makePiece(pieceID, positionCounter++)
         node.appendChild(IconElement)
