@@ -3,6 +3,7 @@ import generatePawnMoves from './generatePawnMoves.js'
 import generateKingMoves from './generateKingMoves.js'
 import generateBishopMoves from './generateBishopMoves.js'
 import generateRookMoves from './generateRookMoves.js'
+import generateKnightMoves from './generateKnightMoves.js'
 
 export const _state = {
   highlightedBoardSquares: [],
@@ -30,6 +31,9 @@ export default function validateMoves(selectedNode) {
       break
     case 'Rook':
       generateRookMoves(pieceDAO)
+      break
+    case 'Knight':
+      generateKnightMoves(pieceDAO)
       break
     default:
       console.warn('unhanlded condition')
