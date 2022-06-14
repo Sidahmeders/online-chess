@@ -1,34 +1,36 @@
 import { _state, getPieceColor, highlightPieceMovements } from './validateMoves.js'
 
+const boardBorders = [
+  56, 57, 58, 59, 60, 61, 62, 63 /* bottom*/, 0, 1, 2, 3, 4, 5, 6, 7 /*top*/, 0, 8, 16, 24, 32, 40, 48, 56 /*left*/, 7,
+  15, 23, 31, 39, 47, 55 /*right*/,
+]
+
 export default function generateKnightMoves({ boardArray, pieceMoves, selectedNode }) {
   _state.validMoves = []
-  Object.entries(pieceMoves).forEach(([key, values]) => {
-    console.log(key)
-
-    const nodePosition = selectedNode.getAttribute('position')
+  Object.values(pieceMoves).forEach((values) => {
     const pieceColor = getPieceColor(selectedNode.id)
 
     let targetNode = selectedNode
-    let targetIndex
+    let targetNodePosition
+
+    let boardLimiter = 0
 
     for (let val of values) {
-      targetIndex = parseInt(targetNode.getAttribute('position'))
-      targetIndex += val
-      if (targetIndex < 0 || targetIndex > 63) return
-      targetNode = boardArray[targetIndex]
+      targetNodePosition = parseInt(targetNode.getAttribute('position'))
+
+      if (boardBorders.includes(targetNodePosition)) boardLimiter++
+      if (boardLimiter === 2) return
+
+      targetNodePosition += val
+      if (targetNodePosition < 0 || targetNodePosition > 63) return
+      targetNode = boardArray[targetNodePosition]
     }
 
-    const targetNodePosition = parseInt(targetNode.getAttribute('position'))
     const targetPieceColor = getPieceColor(targetNode.id)
 
-    console.log(targetIndex, targetNodePosition, targetNode)
-
     if (targetPieceColor === 'Empty' || pieceColor !== targetPieceColor) {
-      const validMove = pieceColor === 'White' ? values.reduce((prev, val) => nodePosition + val, 0) : nodePosition
-      // val + nodePosition : targetNodePosition
-
-      highlightPieceMovements(targetNode) // boardArray[targetIndex]
-      _state.validMoves.push(validMove)
+      highlightPieceMovements(targetNode)
+      _state.validMoves.push(targetNodePosition)
     }
   })
 }
