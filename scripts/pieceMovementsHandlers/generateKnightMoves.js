@@ -1,7 +1,6 @@
 import { _state, getPieceColor, highlightPieceMovements } from './validateMoves.js'
 
 export default function generateKnightMoves({ boardArray, pieceMoves, selectedNode }) {
-  _state.validMoves = []
   Object.values(pieceMoves).forEach((values) => {
     const pieceColor = getPieceColor(selectedNode.id)
 

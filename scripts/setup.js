@@ -60,8 +60,10 @@ export function PIECES_MOVES() {
   */
   const straightMoves = { left: -1, right: +1, up: -8, down: +8 }
   const diagonalMoves = { upLeft: -9, upRight: -7, downLeft: +7, downRight: +9 }
-  const allDirections = { ...straightMoves, ...diagonalMoves }
-  const KnightMoves = {
+  const King = { ...straightMoves, ...diagonalMoves }
+  const Queen = { straightMoves, diagonalMoves }
+  const Bishop = diagonalMoves
+  const Knight = {
     upLeft: [-8, -8, -1],
     upRight: [-8, -8, +1],
     downLeft: [+8, +8, -1],
@@ -71,12 +73,7 @@ export function PIECES_MOVES() {
     leftDown: [-1, -1, +8],
     rightDown: [+1, +1, +8],
   }
-
-  const King = { ...allDirections }
-  const Queen = { ...allDirections }
-  const Bishop = { ...diagonalMoves }
-  const Knight = { ...KnightMoves }
-  const Rook = { ...straightMoves }
+  const Rook = straightMoves
   const Pawn = { up: -8, upLeft: -9, upRight: -7 }
 
   return Object.freeze({ King, Queen, Bishop, Knight, Rook, Pawn })

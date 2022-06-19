@@ -4,6 +4,7 @@ import generateKingMoves from './generateKingMoves.js'
 import generateBishopMoves from './generateBishopMoves.js'
 import generateRookMoves from './generateRookMoves.js'
 import generateKnightMoves from './generateKnightMoves.js'
+import generateQueenMoves from './generateQueenMoves.js'
 
 export const _state = {
   highlightedBoardSquares: [],
@@ -15,6 +16,8 @@ export default function validateMoves(selectedNode) {
   const { boardArray, virtualBoardArray } = createBoardArrays(boardContainer)
   const pieceType = getPieceTypeFromNumber(selectedNode.id)
   const pieceMoves = PIECES_MOVES()[pieceType]
+  _state.validMoves = []
+  // console.log(virtualBoardArray)
 
   const pieceDAO = { boardArray, virtualBoardArray, pieceMoves, selectedNode }
   /* eslint-disable indent */
@@ -25,6 +28,9 @@ export default function validateMoves(selectedNode) {
       break
     case 'King':
       generateKingMoves(pieceDAO)
+      break
+    case 'Queen':
+      generateQueenMoves(pieceDAO)
       break
     case 'Bishop':
       generateBishopMoves(pieceDAO)
@@ -84,9 +90,3 @@ export function swapNodes(selectedNode, targetNode) {
   selectedNode.src = ' '
   selectedNode.id = PIECES.Empty
 }
-
-// function generateKingMoves() {}
-// function generateQueenMoves() {}
-// function generateBishopMoves() {}
-// function generateKnightMoves() {}
-// function generateRookMoves() {}

@@ -2,8 +2,6 @@ import { PIECES } from '../setup.js'
 import { _state, getPieceColor, highlightPieceMovements } from './validateMoves.js'
 
 export default function generatePawnMoves({ boardArray, pieceMoves, selectedNode }) {
-  // console.log(boardArray, virtualBoardArray)
-  _state.validMoves = []
   Object.entries(pieceMoves).forEach(([key, val]) => {
     const nodePosition = parseInt(selectedNode.getAttribute('position'))
     const pieceColor = getPieceColor(selectedNode.id)
