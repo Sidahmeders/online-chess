@@ -17,7 +17,7 @@ export default function generateBishopMoves({ boardArray, pieceMoves, selectedNo
       const targetPieceColor = getPieceColor(targetNode.id)
 
       if (pieceColor === targetPieceColor) return
-      // WIERD EGE CASE: don't why we are jupming to a diffrent tile color
+      // EGE CASE: stop when you jupm to a diffrent tile color
       const tileColor = selectedNode.parentNode.getAttribute('tile-color')
       const targetTileColor = targetNode.parentNode.getAttribute('tile-color')
       if (tileColor !== targetTileColor) return
