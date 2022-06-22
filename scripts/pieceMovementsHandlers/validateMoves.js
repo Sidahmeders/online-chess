@@ -9,20 +9,17 @@ import generateQueenMoves from './generateQueenMoves.js'
 export const _state = {
   highlightedBoardSquares: [],
   validMoves: null,
+  playerTurn: 8,
 }
 
 export default function validateMoves(selectedNode) {
-  const boardContainer = document.getElementById('board-container')
-  const { boardArray, virtualBoardArray } = createBoardArrays(boardContainer)
-  const pieceType = getPieceTypeFromNumber(selectedNode.id)
-  const pieceMoves = PIECES_MOVES()[pieceType]
+  if (!checkPlayersTurn(selectedNode.id)) return
+  const pieceDAO = buildPieceDAO(selectedNode)
   _state.validMoves = []
   // console.log(virtualBoardArray)
 
-  const pieceDAO = { boardArray, virtualBoardArray, pieceMoves, selectedNode }
   /* eslint-disable indent */
-
-  switch (pieceType) {
+  switch (pieceDAO.pieceType) {
     case 'Pawn':
       generatePawnMoves(pieceDAO)
       break
@@ -63,10 +60,24 @@ function createBoardArrays(boardContainer) {
   return { boardArray, virtualBoardArray }
 }
 
+function checkPlayersTurn(pieceID) {
+  const pieceColor = getPieceColor(pieceID)
+  const playerTurnColor = getPieceColor(_state.playerTurn)
+  return pieceColor === playerTurnColor
+}
+
+function buildPieceDAO(selectedNode) {
+  const boardContainer = document.getElementById('board-container')
+  const { boardArray, virtualBoardArray } = createBoardArrays(boardContainer)
+  const pieceType = getPieceTypeFromNumber(selectedNode.id)
+  const pieceMoves = PIECES_MOVES()[pieceType]
+  return { boardArray, virtualBoardArray, pieceType, pieceMoves, selectedNode }
+}
+
 export function getPieceColor(pieceID) {
   if (pieceID == 0) return 'Empty'
-  if (pieceID < 15) return 'White'
-  if (pieceID > 16) return 'Black'
+  if (pieceID <= 14) return 'White'
+  if (pieceID >= 16) return 'Black'
 }
 
 export function highlightPieceMovements(targetNode) {
@@ -89,4 +100,5 @@ export function swapNodes(selectedNode, targetNode) {
   targetNode.id = selectedNode.id
   selectedNode.src = ' '
   selectedNode.id = PIECES.Empty
+  _state.playerTurn = _state.playerTurn === 8 ? _state.playerTurn << 1 : _state.playerTurn >> 1
 }
