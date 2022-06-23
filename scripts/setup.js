@@ -12,8 +12,6 @@
 */
 export const FEN_STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
-// rkbqk1kr/pppp1ppp/4p3/2b5/8/4PK2/PPPP1PPP/RKBQKB1R TODO: NOT WORKING..
-
 export const PIECES = {
   /*  
     bin=10010, dec=16+2 -> COLOR:10 TYPE:010 => Black Queen
@@ -116,7 +114,7 @@ export function buildFenString(virtualBoard) {
     if (isNewRow) fenPlaceholder += '/'
 
     if (!isEmptyColumn) {
-      const pieceSymbol = pieceFenChar.slice(0, 1)
+      const pieceSymbol = pieceFenChar === 'Knight' ? 'N' : pieceFenChar.slice(0, 1)
       fenPlaceholder += val <= 15 ? pieceSymbol : pieceSymbol.toLowerCase()
     } else emptySquaresCount++
   })

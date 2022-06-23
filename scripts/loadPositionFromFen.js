@@ -3,7 +3,10 @@ import { FEN_STARTING_POSITION, PIECES, PieceTypeFromSymbol } from './setup.js'
 
 export default function loadPositionFromFen() {
   // rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
-  const fenBoard = FEN_STARTING_POSITION.split(' ')[0]
+  const fenBoard =
+    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' ||
+    'rkbqk1kr/pppp1ppp/4p3/2b5/8/4PN2/PPPP1PPP/RKBQKB1R' ||
+    FEN_STARTING_POSITION.split(' ')[0]
   const boardContainer = document.getElementById('board-container')
 
   let positionCounter = 0
@@ -11,7 +14,11 @@ export default function loadPositionFromFen() {
     const row = fenBoard.split('/')[i]?.split('') || []
     const fileNodes = rankNode.childNodes
 
-    fileNodes.forEach((node, j) => {
+    // console.log(row)
+
+    for (let j = 0; j < fileNodes.length; j++) {
+      const node = fileNodes[j]
+
       const isBoardBound = i < 8 && j > 0
       if (isBoardBound) {
         const isBlackTile = (i + j) % 2
@@ -27,6 +34,6 @@ export default function loadPositionFromFen() {
         const IconElement = makePiece(pieceID, positionCounter++)
         node.appendChild(IconElement)
       }
-    })
+    }
   })
 }
