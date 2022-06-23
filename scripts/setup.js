@@ -12,6 +12,8 @@
 */
 export const FEN_STARTING_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
+// rkbqk1kr/pppp1ppp/4p3/2b5/8/4PK2/PPPP1PPP/RKBQKB1R TODO: NOT WORKING..
+
 export const PIECES = {
   /*  
     bin=10010, dec=16+2 -> COLOR:10 TYPE:010 => Black Queen
@@ -96,4 +98,30 @@ export function getPieceTypeFromNumber(number) {
     .filter((val) => val)[0]
 
   return pieceType
+}
+
+export function buildFenString(virtualBoard) {
+  let fenPlaceholder = ''
+  let emptySquaresCount = 0
+
+  virtualBoard.forEach((val, i) => {
+    const isNewRow = i !== 0 && i % 8 === 0
+    const pieceFenChar = getPieceTypeFromNumber(val)
+    const isEmptyColumn = pieceFenChar === 'Empty'
+
+    if ((isNewRow || !isEmptyColumn) && emptySquaresCount) {
+      fenPlaceholder += emptySquaresCount
+      emptySquaresCount = 0
+    }
+    if (isNewRow) fenPlaceholder += '/'
+
+    if (!isEmptyColumn) {
+      const pieceSymbol = pieceFenChar.slice(0, 1)
+      fenPlaceholder += val <= 15 ? pieceSymbol : pieceSymbol.toLowerCase()
+    } else emptySquaresCount++
+  })
+
+  // console.log(virtualBoard)
+  // console.log(fenPlaceholder)
+  return fenPlaceholder
 }

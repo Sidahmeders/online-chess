@@ -1,4 +1,4 @@
-import { PIECES, getPieceTypeFromNumber, PIECES_MOVES } from '../setup.js'
+import { PIECES, getPieceTypeFromNumber, PIECES_MOVES, buildFenString } from '../setup.js'
 import generatePawnMoves from './generatePawnMoves.js'
 import generateKingMoves from './generateKingMoves.js'
 import generateBishopMoves from './generateBishopMoves.js'
@@ -16,7 +16,8 @@ export default function validateMoves(selectedNode) {
   if (!checkPlayersTurn(selectedNode.id)) return
   const pieceDAO = buildPieceDAO(selectedNode)
   _state.validMoves = []
-  // console.log(virtualBoardArray)
+
+  buildFenString(pieceDAO.virtualBoardArray)
 
   /* eslint-disable indent */
   switch (pieceDAO.pieceType) {
