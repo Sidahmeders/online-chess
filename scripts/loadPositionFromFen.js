@@ -3,9 +3,8 @@ import { FEN_STARTING_POSITION, PIECES, PieceTypeFromSymbol } from './setup.js'
 
 export default function loadPositionFromFen() {
   // rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
-  const fenBoard =
-    // 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' ||
-    'rnbqk1nr/pppp1ppp/4p3/2b5/8/4PN2/PPPP1PPP/RNBQKB1R' || FEN_STARTING_POSITION.split(' ')[0]
+  // 'rnbqk1nr/pppp1ppp/4p3/2b5/8/4PN2/PPPP1PPP/RNBQKB1R'
+  const fenBoard = FEN_STARTING_POSITION.split(' ')[0]
   const boardNodes = document.getElementById('board-container').childNodes
 
   let positionCounter = 0
