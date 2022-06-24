@@ -1,9 +1,10 @@
-import makePiece from './makePiece.js'
+import addDraggableEvents from './pieceMovementsHandlers/addDraggableEvents.js'
 import { FEN_STARTING_POSITION, PIECES, PieceTypeFromSymbol } from './setup.js'
 
 export default function loadPositionFromFen() {
   // rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
-  // 'rnbqk1nr/pppp1ppp/4p3/2b5/8/4PN2/PPPP1PPP/RNBQKB1R'
+  // rnbqk1nr/pppp1ppp/4p3/2b5/8/4PN2/PPPP1PPP/RNBQKB1R
+  // rnb1k1nr/ppppq1pp/5p2/4p3/1b2P3/2NP1P2/PPP3PP/R1BQKBNR
   const fenBoard = FEN_STARTING_POSITION.split(' ')[0]
   const boardNodes = document.getElementById('board-container').childNodes
 
@@ -39,4 +40,29 @@ function transformFenArray(fenRow) {
     else boardRanks.push(tmpColumn)
   }
   return boardRanks
+}
+
+const styles = {
+  chessPieceStyle: `
+    width: 85%;
+    height: 85%;
+  `,
+}
+
+function makePiece(pieceID, position) {
+  const IconElement = document.createElement('img')
+  IconElement.id = pieceID
+  IconElement.setAttribute('position', position)
+  IconElement.className = 'chess-piece'
+  IconElement.style = styles.chessPieceStyle
+  IconElement.src = pieceID ? `icons/${pieceID}.png` : ' '
+  IconElement.onclick = pieceClickHanlder
+  addDraggableEvents(IconElement)
+
+  return IconElement
+}
+
+function pieceClickHanlder(event) {
+  console.log(event.target.id, 'id')
+  console.log(event.target.getAttribute('position'), 'position')
 }
