@@ -1,4 +1,4 @@
-import _state from '../_state.js'
+import { boardState, fenState } from '../_state.js'
 import { PIECES, getPieceTypeFromNumber, PIECES_MOVES, buildFenString } from '../setup.js'
 import generatePawnMoves from './generatePawnMoves.js'
 import generateKingMoves from './generateKingMoves.js'
@@ -10,8 +10,8 @@ import generateQueenMoves from './generateQueenMoves.js'
 export default function validateMoves(selectedNode) {
   if (!checkPlayersTurn(selectedNode.id)) return
   const pieceDAO = buildPieceDAO(selectedNode)
-  _state.validMoves = []
-  _state.currentFenPosition = buildFenString(pieceDAO.virtualBoardArray)
+  boardState.validMoves = []
+  fenState.piecesPlacements = buildFenString(pieceDAO.virtualBoardArray)
 
   /* eslint-disable indent */
   switch (pieceDAO.pieceType) {
@@ -57,8 +57,7 @@ function createBoardArrays(boardContainer) {
 
 function checkPlayersTurn(pieceID) {
   const pieceColor = getPieceColor(pieceID)
-  const playerTurnColor = getPieceColor(_state.playerTurn)
-  return pieceColor === playerTurnColor
+  return pieceColor[0].toLowerCase() === fenState.playerTurn
 }
 
 function buildPieceDAO(selectedNode) {
@@ -66,7 +65,7 @@ function buildPieceDAO(selectedNode) {
   const { boardArray, virtualBoardArray } = createBoardArrays(boardContainer)
   const pieceType = getPieceTypeFromNumber(selectedNode.id)
   const pieceMoves = PIECES_MOVES()[pieceType]
-  return { _state, boardArray, virtualBoardArray, pieceType, pieceMoves, selectedNode }
+  return { boardState, boardArray, virtualBoardArray, pieceType, pieceMoves, selectedNode }
 }
 
 export function getPieceColor(pieceID) {
@@ -77,23 +76,25 @@ export function getPieceColor(pieceID) {
 
 export function highlightPieceMovements(targetNode) {
   targetNode.style.background = '#49dd'
-  _state.highlightedBoardSquares.push(targetNode)
+  boardState.highlightedBoardSquares.push(targetNode)
 }
 
 export function clearPieceMovementsHighlight() {
-  _state.highlightedBoardSquares.forEach((sqaureNode) => (sqaureNode.style.background = 'initial'))
-  _state.highlightedBoardSquares = []
+  boardState.highlightedBoardSquares.forEach(
+    (sqaureNode) => (sqaureNode.style.background = 'initial')
+  )
+  boardState.highlightedBoardSquares = []
 }
 
 export function swapNodes(selectedNode, targetNode) {
   const targetPosition = parseInt(targetNode.getAttribute('position'))
-  const canSwapNodes = _state.validMoves.includes(targetPosition)
-  _state.validMoves = []
+  const canSwapNodes = boardState.validMoves.includes(targetPosition)
+  boardState.validMoves = []
   if (!canSwapNodes) return
 
   targetNode.src = selectedNode.src
   targetNode.id = selectedNode.id
   selectedNode.src = ' '
   selectedNode.id = PIECES.Empty
-  _state.playerTurn = _state.playerTurn === 8 ? _state.playerTurn << 1 : _state.playerTurn >> 1
+  fenState.playerTurn = fenState.playerTurn === 'w' ? 'b' : 'w'
 }

@@ -1,6 +1,6 @@
 import { getPieceColor, highlightPieceMovements } from './validateMoves.js'
 
-export default function generateRookMoves({ _state, boardArray, pieceMoves, selectedNode }) {
+export default function generateRookMoves({ boardState, boardArray, pieceMoves, selectedNode }) {
   Object.values(pieceMoves).forEach((val) => {
     let counter = 0
     while (counter++ < 8) {
@@ -24,7 +24,7 @@ export default function generateRookMoves({ _state, boardArray, pieceMoves, sele
       if (targetPieceColor === 'Empty' || pieceColor !== targetPieceColor) {
         const validMove = pieceColor === 'White' ? increment + nodePosition : targetNodePosition
         highlightPieceMovements(boardArray[validMove])
-        _state.validMoves.push(validMove)
+        boardState.validMoves.push(validMove)
       }
 
       if (pieceColor !== targetPieceColor && targetPieceColor !== 'Empty') return

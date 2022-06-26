@@ -1,6 +1,6 @@
 import { getPieceColor, highlightPieceMovements } from './validateMoves.js'
 
-export default function generateKnightMoves({ _state, boardArray, pieceMoves, selectedNode }) {
+export default function generateKnightMoves({ boardState, boardArray, pieceMoves, selectedNode }) {
   Object.values(pieceMoves).forEach((values) => {
     const pieceColor = getPieceColor(selectedNode.id)
 
@@ -21,7 +21,7 @@ export default function generateKnightMoves({ _state, boardArray, pieceMoves, se
 
     if (canLeapTo && tileColor !== targetTileColor) {
       highlightPieceMovements(targetNode)
-      _state.validMoves.push(targetNodePosition)
+      boardState.validMoves.push(targetNodePosition)
     }
   })
 }

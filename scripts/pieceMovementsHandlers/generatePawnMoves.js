@@ -1,7 +1,7 @@
 import { PIECES } from '../setup.js'
 import { getPieceColor, highlightPieceMovements } from './validateMoves.js'
 
-export default function generatePawnMoves({ _state, boardArray, pieceMoves, selectedNode }) {
+export default function generatePawnMoves({ boardState, boardArray, pieceMoves, selectedNode }) {
   Object.entries(pieceMoves).forEach(([key, val]) => {
     const nodePosition = parseInt(selectedNode.getAttribute('position'))
     const pieceColor = getPieceColor(selectedNode.id)
@@ -18,7 +18,7 @@ export default function generatePawnMoves({ _state, boardArray, pieceMoves, sele
     if (canCapture || canMoveForward) {
       const validMove = pieceColor === 'White' ? nodePosition + val : targetNodePosition
       highlightPieceMovements(boardArray[validMove])
-      _state.validMoves.push(validMove)
+      boardState.validMoves.push(validMove)
     }
   })
 }

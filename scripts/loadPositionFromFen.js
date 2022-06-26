@@ -2,14 +2,12 @@ import addDraggableEvents from './pieceMovementsHandlers/addDraggableEvents.js'
 import { FEN_STARTING_POSITION, PIECES, PieceTypeFromSymbol } from './setup.js'
 
 export default function loadPositionFromFen() {
-  // rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
-  // rnbqk1nr/pppp1ppp/4p3/2b5/8/4PN2/PPPP1PPP/RNBQKB1R
-  // rnb1k1nr/ppppq1pp/5p2/4p3/1b2P3/2NP1P2/PPP3PP/R1BQKBNR
-  const fenBoard = FEN_STARTING_POSITION.split(' ')[0]
+  // rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR || rnbqk1nr/pppp1ppp/4p3/2b5/8/4PN2/PPPP1PPP/RNBQKB1R || rnb1k1nr/ppppq1pp/5p2/4p3/1b2P3/2NP1P2/PPP3PP/R1BQKBNR
+  const piecesPlacements = FEN_STARTING_POSITION.split(' ')[0]
   const boardNodes = document.getElementById('board-container').childNodes
 
   let positionCounter = 0
-  fenBoard.split('/').forEach((fenRow, i) => {
+  piecesPlacements.split('/').forEach((fenRow, i) => {
     const boardRanks = transformFenArray(fenRow)
     const fileNodes = boardNodes[i].childNodes
 

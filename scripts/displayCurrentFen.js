@@ -15,7 +15,7 @@ const styles = {
   `,
 }
 
-export default function displayCurrentFen(currentFenPosition) {
+export default function displayCurrentFen(fenState) {
   let fenContainer = document.getElementById('fen-placeholder')
   if (fenContainer === null) {
     fenContainer = document.createElement('div')
@@ -25,7 +25,16 @@ export default function displayCurrentFen(currentFenPosition) {
   fenContainer.innerHTML = ''
 
   const fenPlaceholderSpan = document.createElement('span')
-  fenPlaceholderSpan.innerText = currentFenPosition
+  const {
+    piecesPlacements,
+    playerTurn,
+    castlingRights,
+    possibleEnPassantTargets,
+    halfmoveClock,
+    fullmoveNumber,
+  } = fenState
+  const updatedFen = `${piecesPlacements} ${playerTurn} ${castlingRights} ${possibleEnPassantTargets} ${halfmoveClock} ${fullmoveNumber}`
+  fenPlaceholderSpan.innerText = updatedFen
 
   const copyFenButton = document.createElement('button')
   copyFenButton.style = styles.copyButton

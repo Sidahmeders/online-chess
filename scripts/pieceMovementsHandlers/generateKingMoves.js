@@ -1,6 +1,6 @@
 import { getPieceColor, highlightPieceMovements } from './validateMoves.js'
 
-export default function generateKingMoves({ _state, boardArray, pieceMoves, selectedNode }) {
+export default function generateKingMoves({ boardState, boardArray, pieceMoves, selectedNode }) {
   Object.values(pieceMoves).forEach((val) => {
     let nodePosition = parseInt(selectedNode.getAttribute('position'))
     const pieceColor = getPieceColor(selectedNode.id)
@@ -14,7 +14,7 @@ export default function generateKingMoves({ _state, boardArray, pieceMoves, sele
     if (targetPieceColor === 'Empty' || pieceColor !== targetPieceColor) {
       const validMove = pieceColor === 'White' ? val + nodePosition : targetNodePosition
       highlightPieceMovements(boardArray[validMove])
-      _state.validMoves.push(validMove)
+      boardState.validMoves.push(validMove)
     }
   })
 }

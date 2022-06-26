@@ -119,7 +119,5 @@ export function buildFenString(virtualBoard) {
     } else emptySquaresCount++
   })
 
-  // console.log(virtualBoard)
-  // console.log(fenPlaceholder)
   return fenPlaceholder
 }
