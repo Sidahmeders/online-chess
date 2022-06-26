@@ -1,17 +1,11 @@
-import { PIECES, getPieceTypeFromNumber, PIECES_MOVES, buildFenString, FEN_STARTING_POSITION } from '../setup.js'
+import _state from '../_state.js'
+import { PIECES, getPieceTypeFromNumber, PIECES_MOVES, buildFenString } from '../setup.js'
 import generatePawnMoves from './generatePawnMoves.js'
 import generateKingMoves from './generateKingMoves.js'
 import generateBishopMoves from './generateBishopMoves.js'
 import generateRookMoves from './generateRookMoves.js'
 import generateKnightMoves from './generateKnightMoves.js'
 import generateQueenMoves from './generateQueenMoves.js'
-
-export const _state = {
-  highlightedBoardSquares: [],
-  validMoves: null,
-  playerTurn: 8,
-  currentFenPosition: FEN_STARTING_POSITION,
-}
 
 export default function validateMoves(selectedNode) {
   if (!checkPlayersTurn(selectedNode.id)) return
@@ -72,7 +66,7 @@ function buildPieceDAO(selectedNode) {
   const { boardArray, virtualBoardArray } = createBoardArrays(boardContainer)
   const pieceType = getPieceTypeFromNumber(selectedNode.id)
   const pieceMoves = PIECES_MOVES()[pieceType]
-  return { boardArray, virtualBoardArray, pieceType, pieceMoves, selectedNode }
+  return { _state, boardArray, virtualBoardArray, pieceType, pieceMoves, selectedNode }
 }
 
 export function getPieceColor(pieceID) {

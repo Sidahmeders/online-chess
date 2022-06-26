@@ -1,6 +1,6 @@
-import { _state, getPieceColor, highlightPieceMovements } from './validateMoves.js'
+import { getPieceColor, highlightPieceMovements } from './validateMoves.js'
 
-export default function generateKingMoves({ boardArray, pieceMoves, selectedNode }) {
+export default function generateKingMoves({ _state, boardArray, pieceMoves, selectedNode }) {
   Object.values(pieceMoves).forEach((val) => {
     let nodePosition = parseInt(selectedNode.getAttribute('position'))
     const pieceColor = getPieceColor(selectedNode.id)

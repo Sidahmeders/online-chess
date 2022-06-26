@@ -1,6 +1,6 @@
-import { _state, getPieceColor, highlightPieceMovements } from './validateMoves.js'
+import { getPieceColor, highlightPieceMovements } from './validateMoves.js'
 
-export default function generateRookMoves({ boardArray, pieceMoves, selectedNode }) {
+export default function generateRookMoves({ _state, boardArray, pieceMoves, selectedNode }) {
   Object.values(pieceMoves).forEach((val) => {
     let counter = 0
     while (counter++ < 8) {
