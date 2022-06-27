@@ -41,7 +41,7 @@ export default function displayCurrentFen(fenState) {
   copyFenButton.innerText = 'copy'
   copyFenButton.onclick = (event) => {
     const fenString = event.target.parentNode.firstChild.innerText
-    console.log(fenString) // TODO: copy this to our clipboard
+    navigator.clipboard.writeText(fenString)
   }
 
   fenContainer.appendChild(fenPlaceholderSpan)

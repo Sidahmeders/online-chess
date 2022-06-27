@@ -92,9 +92,13 @@ export function swapNodes(selectedNode, targetNode) {
   boardState.validMoves = []
   if (!canSwapNodes) return
 
+  if (targetNode.id === '0') fenState.halfmoveClock++
+  else fenState.halfmoveClock = 0
+  fenState.playerTurn = fenState.playerTurn === 'w' ? 'b' : 'w'
+  if (fenState.playerTurn === 'w') fenState.fullmoveNumber++
+
   targetNode.src = selectedNode.src
   targetNode.id = selectedNode.id
   selectedNode.src = ' '
   selectedNode.id = PIECES.Empty
-  fenState.playerTurn = fenState.playerTurn === 'w' ? 'b' : 'w'
 }
